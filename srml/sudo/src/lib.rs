@@ -129,6 +129,8 @@ use sr_primitives::traits::StaticLookup;
 use srml_support::{StorageValue, Parameter, Dispatchable, decl_module, decl_event, decl_storage, ensure};
 use system::ensure_signed;
 
+extern crate sr_io as runtime_io;
+
 pub trait Trait: system::Trait {
 	/// The overarching event type.
 	type Event: From<Event<Self>> + Into<<Self as system::Trait>::Event>;
@@ -150,7 +152,13 @@ decl_module! {
 			let sender = ensure_signed(origin)?;
 			ensure!(sender == Self::key(), "only the current sudo key can sudo");
 
-			let ok = proposal.dispatch(system::RawOrigin::Root.into()).is_ok();
+                        let ok = match proposal.dispatch(system::RawOrigin::Root.into()){
+                            Ok(_) => true,
+                            Err(err) => {
+                                runtime_io::print(err);
+                                false
+                            }
+                        };
 			Self::deposit_event(RawEvent::Sudid(ok));
 		}
 

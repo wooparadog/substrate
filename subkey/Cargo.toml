@@ -21,3 +21,6 @@ parity-codec = "3.2"
 
 [features]
 bench = []
+
+[patch.'https://github.com/paritytech/substrate']
+substrate-primitives = { git = 'https://github.com/wooparadog/substrate', branch = 'wooparadog' }

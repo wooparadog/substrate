@@ -101,3 +101,5 @@ is-it-maintained-open-issues = { repository = "paritytech/substrate" }
 # Substrate runtime requires unwinding.
 panic = "unwind"
 
+[patch.'https://github.com/paritytech/substrate']
+substrate-primitives = { git = 'https://github.com/wooparadog/substrate', branch = 'wooparadog' }
